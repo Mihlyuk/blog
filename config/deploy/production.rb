@@ -1,4 +1,4 @@
-set :rails_env, 'production'
+set :rails_env, :development
 
 server '185.143.173.203', user: 'konstantin', roles: %w{app db web}
 
