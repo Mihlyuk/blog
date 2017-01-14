@@ -37,8 +37,10 @@ group :development do
   gem 'capistrano', '~> 3.6'
   gem 'capistrano-rails', '~> 1.2'
   gem 'capistrano3-unicorn'
-  gem 'capistrano-rvm'
 end
+
+gem 'capistrano-rvm'
+gem 'unicorn'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
