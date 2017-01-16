@@ -1,9 +1,8 @@
 class QuizController < ApplicationController
 
-  skip_before_action :verify_authenticity_token
   ADDR=URI("http://pushkin.rubyroidlabs.com/quiz")
 
-  def resolve
+  def answer
 
     logger.debug params
 
