@@ -48,6 +48,9 @@ group :development, :test do
 end
 
 gem 'listen', '~> 3.0.5'
+gem 'pry'
+#Gems for parsing
+
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170112083529) do
+ActiveRecord::Schema.define(version: 20170116204455) do
 
   create_table "articles", force: :cascade do |t|
     t.string   "title"
@@ -26,6 +26,38 @@ ActiveRecord::Schema.define(version: 20170112083529) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["article_id"], name: "index_comments_on_article_id"
+  end
+
+  create_table "gramms", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "gramms_lines", id: false, force: :cascade do |t|
+    t.integer "line_id",  null: false
+    t.integer "gramm_id", null: false
+  end
+
+  create_table "lines", force: :cascade do |t|
+    t.string   "text"
+    t.integer  "poem_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["poem_id"], name: "index_lines_on_poem_id"
+  end
+
+  create_table "logs", force: :cascade do |t|
+    t.string   "question"
+    t.string   "answer"
+    t.integer  "level"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "poems", force: :cascade do |t|
+    t.string   "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
