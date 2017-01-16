@@ -10,10 +10,3 @@ set :assets_roles, [:web, :app]
 set :normalize_asset_timestamps, %w{public/images public/javascripts public/stylesheets}
 
 set :keep_assets, 2
-
-after 'deploy:publishing', 'deploy:restart'
-namespace :deploy do
-    task :restart do
-        invoke 'unicorn:start'
-    end
-end
