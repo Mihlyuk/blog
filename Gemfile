@@ -43,14 +43,11 @@ gem 'capistrano-rvm'
 gem 'unicorn'
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
 end
 
 gem 'listen', '~> 3.0.5'
 gem 'pry'
-#Gems for parsing
-
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
