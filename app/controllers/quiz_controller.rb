@@ -1,4 +1,7 @@
 class QuizController < ApplicationController
+
+  skip_before_action :verify_authenticity_token
+
   def solver
     uri = URI("http://pushkin.rubyroidlabs.com/quiz")
 
@@ -12,4 +15,5 @@ class QuizController < ApplicationController
 
     Log.create(params.permit(:question, :id, :level))
   end
+
 end
