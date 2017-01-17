@@ -2,23 +2,22 @@ class QuizController < ApplicationController
 
   ADDR=URI("http://pushkin.rubyroidlabs.com/quiz")
 
-  def answer
-
-    logger.debug params
-
-    question = params[:question]
-    level = params[:level]
+  def new
+    Log.create(question_params)
 
     parameters = {
-        answer: answer,
+        answer: 'мой ответ',
         token: Rails.application.secrets[:api_key],
         task_id: params[:id]
     }
 
     Net::HTTP.post_form(ADDR, parameters)
+  end
 
-    Log.new(answer: answer, question: question, level: level).save
+  private
 
+  def question_params
+    params.permit(:question, :id, :level)
   end
 
 end
