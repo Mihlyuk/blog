@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     resources :comments
   end
 
-  post "/quiz", to: "quiz#new"
+  POST 'quiz', to: 'quiz#new'
 
   root 'welcome#index'
 end
