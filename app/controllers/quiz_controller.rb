@@ -2,6 +2,7 @@ require 'pry'
 
 class QuizController < ApplicationController
   skip_before_action :verify_authenticity_token
+  include QuizHelper
 
   def solver
     question = params[:question]

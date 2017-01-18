@@ -1,4 +1,7 @@
 module QuizHelper
+  CODES = %w{ а б в г д е ё ж з и й к л м н о п р с т у ф х ц ч ш щ ъ ы ь э ю я
+            a b c d e f g h i j k l m n o p q r s t u v w x y z }
+  COLLISION = 4
 
   def answer(level, question)
     case level
@@ -13,15 +16,46 @@ module QuizHelper
     end
   end
 
-  def save_log
+  def save_log(question, answer, level, task_id)
 
   end
 
   private
 
+  def split(text)
+    big_word_exp = /[а-яА-яa-zA-Z]{4,}/
+    mid_word_exp = /[а-яА-яa-zA-Z]{3,}/
+    sm_word_exp = /[а-яА-яa-zA-Z]+/
+
+    words = text.scan(big_word_exp)
+    words = text.scan(mid_word_exp) if words.length < 2
+    words = text.scan(sm_word_exp) if words.length < 2
+
+    words
+  end
+
+  def code(text)
+    if text.kind_of?(Array)
+      text.map { |word| word_code(word) }
+    else
+      word_code(text)
+    end
+  end
+
+  def word_code(word)
+    word.mb_chars.downcase.to_s.slice(0, COLLISION).split('').map do |letter|
+      if CODES.index(letter).nil?
+        binding.pry
+      end
+
+      "0#{CODES.index(letter) + 1}".slice(-2, 2)
+    end.join.to_i
+  end
+
+
   def one(question)
     question_string = question.scan(/[а-яА-яa-zA-Z]+/).join(' ').mb_chars.downcase.to_s
-    gramm_ids = Abc.code(split(question))
+    gramm_ids = code(split(question))
     gramm_ids.each do |id|
       if Gramm.exists?(id)
         gramm = Gramm.find(id)
@@ -37,7 +71,7 @@ module QuizHelper
   end
 
   def two(question)
-    gramm_ids = Abc.code(split(question))
+    gramm_ids = code(split(question))
     question_string = question.scan(/[а-яА-яa-zA-Z]+|%WORD%/)
     word_index = question_string.index('%WORD%')
 
@@ -69,7 +103,7 @@ module QuizHelper
 
   def four(question)
     questions = question.split(/\n/)
-    next if !questions[0] || !questions[1] || !questions[2]
+    return nil if !questions[0] || !questions[1] || !questions[2]
 
     first_answers = get_lines(questions[0])
     second_answers = get_lines(questions[1])
@@ -85,7 +119,7 @@ module QuizHelper
   end
 
   def get_lines(question)
-    gramm_ids = Abc.code(split(question))
+    gramm_ids = code(split(question))
     question_string = question.scan(/[а-яА-яa-zA-Z]+|%WORD%/)
     word_index = question_string.index('%WORD%')
     answers = []
