@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
-  get 'quiz/solver'
-
   resources :articles do
     resources :comments
   end
+
+  resources :logs
 
   post 'quiz', to: 'quiz#solver'
 

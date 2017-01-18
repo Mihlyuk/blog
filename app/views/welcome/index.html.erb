@@ -1,2 +1,18 @@
-<h1>Hello, Rails!</h1>
-<%= link_to 'My_blog', controller: 'articles' %>
+<h1>Pushkin contest</h1>
+
+<table>
+  <tr>
+    <td><h2>Question</h2></td>
+    <td><h2>Answer</h2></td>
+    <td><h2>Level</h2></td>
+    <td><h2>Task id</h2></td>
+  </tr>
+      <% @logs.each do |log| %>
+          <tr>
+            <td><%= log.question %></td>
+            <td><%= log.level %></td>
+            <td><%= log.answer %></td>
+            <td><%= log.task_id %></td>
+         </tr>
+     <% end %>
+</table>

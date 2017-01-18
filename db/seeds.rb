@@ -1,6 +1,6 @@
 require 'pry'
 require 'json'
-require_relative '../lib/alphabet.rb'
+require_relative '../lib/abc.rb'
 
 poems_file = open('db/poems.json')
 poems = JSON.parse(poems_file.read)
@@ -13,21 +13,16 @@ poems.each do |poem|
   title = poem['title']
   lines = poem['text']
 
-  poem = Poem.find_by(title: title) ? Poem.find_by(title: title) : Poem.create(title: title)
+  poem = Poem.find_or_create_by(title: title)
 
   lines.each do |text_line|
     line = Line.create(text: text_line, poem: poem)
-    gramms = text_line.scan(/[а-яА-яa-zA-Z]+/).map
+    gramms = text_line.scan(/[а-яА-яa-zA-Z]+/)
 
     gramms.each do |gramm_string|
-      gramm_code = Alphabet.to_code(gramm_string, 4)
+      gramm_code = Abc.code(gramm_string)
 
-      if Gramm.exists?(id: gramm_code)
-        gramm = Gramm.find(gramm_code)
-      else
-        gramm = Gramm.create(id: gramm_code)
-      end
-
+      gramm = Gramm.find_or_create_by(id: gramm_code)
       gramm.lines << line
 
     end
